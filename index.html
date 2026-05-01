@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>俳句ランダム並び替えアプリ</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- SheetJS: Excel読み書き -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <!-- JSZip: Word(.docx)生成 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>俳句作品 ランダム並び替えアプリ</h1>
+      <p class="subtitle">20名・100作品をシャッフルし、Excel／Word縦書きで出力します</p>
+    </header>
+
+    <!-- STEP 1: テンプレートダウンロード -->
+    <section class="card" id="section-template">
+      <h2><span class="step">STEP 1</span> テンプレートをダウンロード</h2>
+      <p>下記のボタンからテンプレートExcelをダウンロードし、20名分の情報を入力してください。</p>
+      <div class="col-spec">
+        <span>列構成：</span>
+        <code>作者番号 ｜ 作者名 ｜ ペンネーム ｜ 作品1 ｜ 作品2 ｜ 作品3 ｜ 作品4 ｜ 作品5</code>
+      </div>
+      <p class="note">※ 作者番号は1〜20の整数。重要人物のみ「5」を割り当ててください。<br>
+                      ※ ふりがなが必要な箇所は（ふりがな）と括弧内に記載してください。</p>
+      <button class="btn btn-secondary" id="btn-download-template">
+        テンプレートをダウンロード (.xlsx)
+      </button>
+    </section>
+
+    <!-- STEP 2: ファイルアップロード -->
+    <section class="card" id="section-upload">
+      <h2><span class="step">STEP 2</span> ファイルをアップロード</h2>
+      <div class="upload-area" id="upload-area">
+        <div class="upload-icon">📂</div>
+        <p>ここにExcelファイルをドラッグ＆ドロップ</p>
+        <p class="or">または</p>
+        <button class="btn btn-primary" id="btn-select-file">ファイルを選択</button>
+        <input type="file" id="file-input" accept=".xlsx,.xls" style="display:none">
+      </div>
+      <div class="file-info hidden" id="file-info">
+        <span id="file-name"></span>
+        <span id="file-rows"></span>
+      </div>
+      <div class="error-msg hidden" id="upload-error"></div>
+    </section>
+
+    <!-- STEP 3: シャッフル実行 -->
+    <section class="card" id="section-shuffle">
+      <h2><span class="step">STEP 3</span> シャッフル実行</h2>
+      <p>ファイルを確認後、ボタンを押して100作品をランダムに並び替えます。</p>
+      <button class="btn btn-primary btn-large" id="btn-shuffle" disabled>
+        シャッフルを実行する
+      </button>
+      <div class="progress hidden" id="progress">
+        <div class="spinner"></div>
+        <span>処理中...</span>
+      </div>
+    </section>
+
+    <!-- STEP 4: ダウンロード -->
+    <section class="card hidden" id="section-download">
+      <h2><span class="step">STEP 4</span> ファイルをダウンロード</h2>
+      <p>シャッフル完了！2種類のファイルをダウンロードできます。</p>
+      <div class="download-buttons">
+        <div class="download-item">
+          <div class="file-icon">📊</div>
+          <p>作品一覧（作者名・ペンネーム付き）</p>
+          <button class="btn btn-success" id="btn-download-excel">
+            Excelファイルをダウンロード
+          </button>
+        </div>
+        <div class="download-item">
+          <div class="file-icon">📄</div>
+          <p>縦書き作品リスト（作品番号・作品のみ）</p>
+          <button class="btn btn-success" id="btn-download-word">
+            Wordファイルをダウンロード（縦書き）
+          </button>
+        </div>
+      </div>
+      <button class="btn btn-secondary btn-reset" id="btn-reset">最初からやり直す</button>
+    </section>
+  </div>
+
+  <script src="js/excel-io.js"></script>
+  <script src="js/shuffle.js"></script>
+  <script src="js/word-io.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# GASのエンドポイントURLやGoogle DocumentのIDを含む設定ファイルは除外
+.env
+config.local.js
+
+# OS生成ファイル
+.DS_Store
+Thumbs.db
+
+# エディタ設定
+.vscode/
+*.swp
