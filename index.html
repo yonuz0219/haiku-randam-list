@@ -26,7 +26,8 @@
         <code>作者番号 ｜ 作者名 ｜ ペンネーム ｜ 作品1 ｜ 作品2 ｜ 作品3 ｜ 作品4 ｜ 作品5</code>
       </div>
       <p class="note">※ 作者番号は1〜20の整数。重要人物のみ「5」を割り当ててください。<br>
-                      ※ ふりがなが必要な箇所は（ふりがな）と括弧内に記載してください。</p>
+                      ※ ふりがなが必要な箇所は（ふりがな）と括弧内に記載してください。<br>
+                      ※ すべての列に必ず入力してください。空欄があるとアップロード時にエラーが発生します。</p>
       <button class="btn btn-secondary" id="btn-download-template">
         テンプレートをダウンロード (.xlsx)
       </button>
@@ -69,14 +70,22 @@
       <div class="download-buttons">
         <div class="download-item">
           <div class="file-icon">📊</div>
-          <p>作品一覧（作者名・ペンネーム付き）</p>
+          <ul class="file-desc">
+            <li><span class="label">内容</span>作品番号・作者番号・作者名・ペンネーム・作品の一覧</li>
+            <li><span class="label">形式</span>Excel (.xlsx)</li>
+            <li><span class="label">ファイル名</span>俳句シャッフル結果.xlsx</li>
+          </ul>
           <button class="btn btn-success" id="btn-download-excel">
             Excelファイルをダウンロード
           </button>
         </div>
         <div class="download-item">
           <div class="file-icon">📄</div>
-          <p>縦書き作品リスト（作品番号・作品のみ）</p>
+          <ul class="file-desc">
+            <li><span class="label">内容</span>作品番号・作品のみの縦書きリスト</li>
+            <li><span class="label">形式</span>Word (.docx)　縦書き・2桁番号は縦中横</li>
+            <li><span class="label">ファイル名</span>俳句シャッフル結果_縦書き.docx</li>
+          </ul>
           <button class="btn btn-success" id="btn-download-word">
             Wordファイルをダウンロード（縦書き）
           </button>

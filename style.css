@@ -189,6 +189,37 @@ header h1 {
 .download-item .file-icon { font-size: 2rem; margin-bottom: 8px; }
 .download-item p { font-size: 0.85rem; color: #555; margin-bottom: 14px; }
 
+/* ダウンロードファイル説明リスト */
+.file-desc {
+  list-style: none;
+  text-align: left;
+  font-size: 0.82rem;
+  color: #555;
+  margin: 0 0 14px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.file-desc li {
+  display: flex;
+  gap: 6px;
+  line-height: 1.5;
+}
+
+.file-desc .label {
+  background: #e8f0e8;
+  color: #2c4a2c;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 1px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
 /* ユーティリティ */
 .hidden { display: none !important; }
 
