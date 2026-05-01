@@ -49,3 +49,7 @@ GASスクリプトは「ウェブアプリとしてデプロイ」し、アク�
 ## GitHubリポジトリ
 
 https://github.com/yonuz0219/haiku-randam-list
+
+## 公開URL（GitHub Pages）
+
+https://yonuz0219.github.io/haiku-randam-list/
