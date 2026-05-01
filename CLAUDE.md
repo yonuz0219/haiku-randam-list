@@ -45,3 +45,7 @@ GASスクリプトは「ウェブアプリとしてデプロイ」し、アク�
 
 - GASのエンドポイントURLは公開リポジトリにコミットしない
 - Google ドキュメントのIDも同様に直接コードに埋め込まない（GAS側で管理する）
+
+## GitHubリポジトリ
+
+https://github.com/yonuz0219/haiku-randam-list
