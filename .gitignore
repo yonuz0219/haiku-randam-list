@@ -1,4 +1,7 @@
-# GASのエンドポイントURLやGoogle DocumentのIDを含む設定ファイルは除外
+# 依存パッケージ
+node_modules/
+
+# 環境変数・ローカル設定（GASのエンドポイントURLやGoogle DocumentのID等）
 .env
 config.local.js
 
