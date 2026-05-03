@@ -220,6 +220,66 @@ header h1 {
   margin-top: 2px;
 }
 
+/* ロック状態（STEP 0確定前） */
+.card.locked {
+  opacity: 0.4;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 設定フォーム（STEP 0） */
+.config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 16px 0 20px;
+}
+
+.config-form label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.config-form input[type="number"] {
+  width: 80px;
+  padding: 6px 10px;
+  border: 1px solid #c0c0b8;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  text-align: right;
+}
+
+.config-form input[type="number"]:disabled {
+  background: #f0f0e8;
+  color: #888;
+}
+
+/* 設定確定済み表示 */
+.config-confirmed {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #eef5ee;
+  border-left: 3px solid #2c4a2c;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.9rem;
+  color: #2c4a2c;
+  font-weight: bold;
+}
+
+/* ナビリンク */
+.nav-link {
+  margin-top: 10px;
+  font-size: 0.85rem;
+}
+
+.nav-link a {
+  color: #2c4a2c;
+  text-decoration: underline;
+}
+
 /* ユーティリティ */
 .hidden { display: none !important; }
 

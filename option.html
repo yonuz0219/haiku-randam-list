@@ -3,30 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>俳句ランダム並び替えアプリ</title>
+  <title>俳句ランダム並び替えアプリ（オプション版）</title>
   <link rel="stylesheet" href="style.css">
-  <!-- SheetJS: Excel読み書き -->
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-  <!-- JSZip: Word(.docx)生成 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
   <div class="container">
     <header>
       <h1>俳句作品 ランダム並び替えアプリ</h1>
-      <p class="subtitle">20名・1人5作品提出した場合の合計100作品をシャッフルし、ExcelのデータリストとWordによる作品一覧（番号つき・縦書き）で出力します</p>
-      <p class="nav-link"><a href="option.html">人数・作品数を任意で指定したい方　オプション版</a></p>
+      <p class="subtitle" id="subtitle">人数と1人あたりの作品数を指定してシャッフルします</p>
+      <p class="nav-link"><a href="index.html">通常版（20名×5作品版）へ戻る</a></p>
     </header>
 
+    <!-- STEP 0: 参加者情報設定 -->
+    <section class="card" id="section-config">
+      <h2><span class="step">STEP 0</span> 参加者情報を設定</h2>
+      <p>人数と1人あたりの作品数を入力して確定してください。</p>
+      <p class="note">※ 人数は5名以上50名以下、1人あたりの作品数は1〜20作品で指定してください。</p>
+      <div class="config-form">
+        <label>人数<input type="number" id="input-num-authors" min="5" max="50" value="20"><span>名</span></label>
+        <label>1人あたりの作品数<input type="number" id="input-works-per-author" min="1" max="20" value="5"><span>作品</span></label>
+      </div>
+      <button class="btn btn-primary" id="btn-confirm-config">設定を確定する</button>
+      <div class="config-confirmed hidden" id="config-confirmed"></div>
+      <div class="error-msg hidden" id="config-error"></div>
+    </section>
+
     <!-- STEP 1: テンプレートダウンロード -->
-    <section class="card" id="section-template">
+    <section class="card locked" id="section-template">
       <h2><span class="step">STEP 1</span> テンプレートをダウンロード</h2>
-      <p>下記のボタンからテンプレートExcelをダウンロードし、20名分の情報を入力してください。</p>
+      <p>下記のボタンから入力テンプレートをダウンロードし、設定した人数分の情報を入力してください。</p>
       <div class="col-spec">
         <span>列構成：</span>
-        <code>作者番号 ｜ 作者名 ｜ ペンネーム ｜ 作品1 ｜ 作品2 ｜ 作品3 ｜ 作品4 ｜ 作品5</code>
+        <code id="col-spec-content">作者番号 ｜ 作者名 ｜ ペンネーム ｜ 作品1 ｜ … ｜ 作品N</code>
       </div>
-      <p class="note">※ 作者番号は1〜20の整数。重要人物のみ「5」を割り当ててください。<br>
+      <p class="note" id="important-note"></p>
+      <p class="note">※ 作者番号は1〜（人数）の整数を入力してください。<br>
                       ※ ふりがなが必要な箇所は（ふりがな）と括弧内に記載してください。<br>
                       ※ すべての列に必ず入力してください。空欄があるとアップロード時にエラーが発生します。</p>
       <button class="btn btn-secondary" id="btn-download-template">
@@ -35,7 +48,7 @@
     </section>
 
     <!-- STEP 2: ファイルアップロード -->
-    <section class="card" id="section-upload">
+    <section class="card locked" id="section-upload">
       <h2><span class="step">STEP 2</span> ファイルをアップロード</h2>
       <div class="upload-area" id="upload-area">
         <div class="upload-icon">📂</div>
@@ -52,9 +65,9 @@
     </section>
 
     <!-- STEP 3: シャッフル実行 -->
-    <section class="card" id="section-shuffle">
+    <section class="card locked" id="section-shuffle">
       <h2><span class="step">STEP 3</span> シャッフル実行</h2>
-      <p>ファイルを確認後、ボタンを押して100作品をランダムに並び替えます。</p>
+      <p id="shuffle-desc">ファイルを確認後、ボタンを押して全作品をランダムに並び替えます。</p>
       <button class="btn btn-primary btn-large" id="btn-shuffle" disabled>
         シャッフルを実行する
       </button>
@@ -96,9 +109,9 @@
     </section>
   </div>
 
-  <script src="js/excel-io.js"></script>
-  <script src="js/shuffle.js"></script>
+  <script src="js/option-excel-io.js"></script>
+  <script src="js/option-shuffle.js"></script>
   <script src="js/word-io.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/option-app.js"></script>
 </body>
 </html>
