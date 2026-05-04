@@ -4,6 +4,7 @@
 //  2. 作品番号は全作品で連続（グループ1: 1〜N, グループ2: N+1〜2N ...）
 //  3. 同一作者の間隔を minGap = min(3, floor(人数/2)) 以上空ける（グループ境界またぎも含む）
 //  4. 最終行の作者（重要人物）は各グループの中央付近（40%〜60%の位置）に配置
+//  5. 前グループの先頭と次グループの先頭が同一作者にならないようにする
 
 const OPTION_MAX_RETRY = 500;
 
@@ -16,11 +17,12 @@ function shuffleWorks(authors, worksPerAuthor) {
   const numAuthors = authors.length;
   const minGap = Math.min(3, Math.floor(numAuthors / 2));
   let result = [];
+  let prevGroupFirstAuthor = null;
 
   for (let g = 0; g < worksPerAuthor; g++) {
     const groupWorks = buildGroupWorks(authors, g);
     const prevAuthors = result.slice(-minGap).map(w => w.authorNumber);
-    const shuffled = shuffleGroupWithConstraints(groupWorks, prevAuthors, numAuthors, minGap);
+    const shuffled = shuffleGroupWithConstraints(groupWorks, prevAuthors, numAuthors, minGap, prevGroupFirstAuthor);
 
     const startNum = g * numAuthors + 1;
     shuffled.forEach((w, i) => {
@@ -28,6 +30,7 @@ function shuffleWorks(authors, worksPerAuthor) {
       w.groupNumber = g + 1;
     });
 
+    prevGroupFirstAuthor = shuffled[0].authorNumber;
     result = result.concat(shuffled);
   }
 
@@ -44,10 +47,10 @@ function buildGroupWorks(authors, groupIndex) {
   }));
 }
 
-function shuffleGroupWithConstraints(works, prevAuthors, groupSize, minGap) {
+function shuffleGroupWithConstraints(works, prevAuthors, groupSize, minGap, prevGroupFirstAuthor) {
   for (let attempt = 0; attempt < OPTION_MAX_RETRY; attempt++) {
     const candidate = tryShuffleOnce(works, groupSize);
-    if (isValidOption(candidate, prevAuthors, minGap)) return candidate;
+    if (isValidOption(candidate, prevAuthors, minGap, prevGroupFirstAuthor)) return candidate;
   }
   return tryShuffleOnce(works, groupSize);
 }
@@ -76,7 +79,13 @@ function fisherYatesOption(arr) {
   }
 }
 
-function isValidOption(works, prevAuthors, minGap) {
+function isValidOption(works, prevAuthors, minGap, prevGroupFirstAuthor) {
+  // グループ先頭が前グループの先頭と同一作者にならないチェック
+  if (prevGroupFirstAuthor !== null && works[0].authorNumber === prevGroupFirstAuthor) {
+    return false;
+  }
+
+  // グループ境界またぎの間隔チェック
   for (let i = 0; i < Math.min(minGap, works.length); i++) {
     for (let j = 0; j < prevAuthors.length; j++) {
       if (works[i].authorNumber === prevAuthors[j]) {
@@ -86,6 +95,7 @@ function isValidOption(works, prevAuthors, minGap) {
     }
   }
 
+  // グループ内の間隔チェック
   for (let i = 1; i < works.length; i++) {
     for (let k = 1; k <= minGap; k++) {
       if (i >= k && works[i].authorNumber === works[i - k].authorNumber) return false;
